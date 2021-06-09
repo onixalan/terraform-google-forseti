@@ -55,9 +55,18 @@ sudo apt-get install -y apt-transport-https ca-certificates git gnupg unzip
 
 # Install Google Cloud SDK
 echo "Forseti Startup - Installing Google Cloud SDK."
-echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+
+# Add the Cloud SDK distribution URI as a package source
+echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+
+# Import the Google Cloud Platform public key
 curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
-sudo apt-get update -y && sudo apt-get install -y google-cloud-sdk=${google_cloud_sdk_version}
+
+# Update the package list
+sudo apt-get update
+
+# Install the Google Cloud SDK
+sudo apt-get install google-cloud-sdk
 
 if ! [ -e "/usr/sbin/google-fluentd" ]; then
   echo "Forseti Startup - Installing GCP Logging agent."
