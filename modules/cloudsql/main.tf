@@ -90,6 +90,11 @@ resource "google_sql_database_instance" "master" {
       value = var.cloudsql_net_write_timeout
     }
 
+    database_flags {
+      name  = "local_infile"
+      value = var.cloudsql_local_infile
+    }    
+
     backup_configuration {
       enabled            = true
       binary_log_enabled = true
