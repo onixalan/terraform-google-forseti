@@ -34,6 +34,10 @@ resource "google_storage_bucket" "client_config" {
   bucket_policy_only = true
   labels             = var.gcs_labels
 
+  versioning {
+    enabled = true
+  }
+  
   depends_on = [null_resource.services-dependency]
 }
 
